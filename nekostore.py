@@ -36,7 +36,7 @@ def item_selected(update: Update, context):
 
 def main():
     # Create the Telegram Updater and dispatcher
-    updater = Updater("6189733110:AAGYkJws-5OjY1RFy_INzcA4OPPFEEM3d0Q", use_context=True, update_queue=Queue())
+    updater = Updater("6189733110:AAGYkJws-5OjY1RFy_INzcA4OPPFEEM3d0Q", update_queue=Queue())
     dispatcher = updater.dispatcher
 
     # Register command and callback handlers
