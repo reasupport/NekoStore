@@ -39,7 +39,7 @@ def add_price_button(client, callback_query):
             "Kirim format: Nama Jasa - Harga (contoh: Jasa Baru - Rp250.000)",
         )
 
-@app.on_message(filters.text & ~filters.command)
+@app.on_message(filters.text & ~filters.command("pricelist"))
 def add_price(client, message):
     if is_owner(message.from_user.id) and "-" in message.text:
         service, price = message.text.split("-", 1)
