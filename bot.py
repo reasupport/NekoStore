@@ -2,8 +2,10 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pricelist import pricelist_data
 import config
+from cachetools import TTLCache
 
 app = Client("my_bot", api_id=config.API_ID, api_hash=config.API_HASH, bot_token=config.BOT_TOKEN)
+cache = TTLCache(maxsize=100, ttl=600)  # Cache with max 100 items and 10 minutes TTL
 
 def is_owner(user_id):
     return user_id in config.OWNERS
@@ -44,6 +46,7 @@ def add_price(client, message):
     if is_owner(message.from_user.id) and "-" in message.text:
         service, price = message.text.split("-", 1)
         pricelist_data[service.strip()] = {"harga": price.strip()}
+        cache.clear()  # Clear cache to reflect the updated pricelist
         message.reply_text(f"Jasa '{service}' telah ditambahkan dengan harga '{price}'.")
         print(pricelist_data)  # Untuk debugging, bisa dihapus di produksi
 
